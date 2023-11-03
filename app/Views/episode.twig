@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Episode Details</title>
+    <style>
+
+        nav {
+            background-color: #192F28;
+            color: #fff;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            text-decoration: none;
+            color: #BC804D;
+            margin-left: 20px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-form {
+            display: flex;
+            align-items: center;
+        }
+
+        #search {
+            padding: 8px;
+            border: 2px solid #BC804D;
+            border-radius: 5px;
+            background-color: transparent;
+            color: #BC804D;
+        }
+
+        button[type="submit"] {
+            padding: 8px 12px;
+            background-color: #005043;
+            color: #BC804D;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .container {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .article-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .article-item {
+            box-sizing: border-box;
+            width: 200%;
+            padding: 5px;
+            border: 1px solid #D7C2B0;
+            margin: 10px;
+            text-align: center;
+            border-radius: 15px;
+        }
+
+        .article-item h2 {
+            font-size: 30px;
+            color: #0C4F4E;
+        }
+
+        .article-item p {
+            text-decoration: none;
+            color: #0C4F4E;
+        }
+
+        .article-item p:hover {
+            color: #0C4F4E;
+        }
+
+        .characters-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .character-item {
+            box-sizing: border-box;
+            width: 18%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            margin: 20px;
+            text-align: center;
+        }
+
+        .character-item p {
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .character-item img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+
+        .character-image-container {
+            max-width: 100%;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .dead {
+            filter: grayscale(100%);
+        }
+
+        .character-image-container .dead-overlay {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 75%;
+            height: 75%;
+            background: rgba(0, 0, 0, 0.8);
+            clip-path: polygon(20% 0, 50% 0, 175% 100%, 90% 50%);
+        }
+
+        h1 {
+            font-size: 30px;
+            color: #fff;
+            margin-left: 80px;
+        }
+
+        footer {
+            background-color: #192F28;
+            color: #fff;
+            padding: 0;
+            text-align: center;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+            background-color: #D7C2B0;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a class="logo" href="/">Home</a>
+    <h1>Rick and Morty Seasons</h1>
+    <div class="search-container">
+        <form class="search-form" action="/search" method="GET">
+            <input type="text" id="search" name="search" placeholder="Search..."/>
+            <button type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                     viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+            </button>
+        </form>
+    </div>
+</nav>
+<div class="container">
+    <div class="article-container">
+        <div class="article-item">
+            <h2> {{ episode.getName() }} | {{ episode.getEpisode() }}</h2>
+            <p>Air Date: {{ episode.getAirDate()|date('Y-m-d') }}</p>
+        </div>
+    </div>
+    <div class="characters-container">
+        {% for character in episode.getCharacters().getCharacters() %}
+            <div class="character-item">
+                <div class="character-image-container">
+                    <img src="{{ character.getImage() }}" alt="{{ character.getName() }}"
+                         class="character-image {% if character.getStatus() == 'Dead' %}dead{% endif %}">
+                    {% if character.getStatus() == 'Dead' %}
+                        <div class="dead-overlay"></div>
+                    {% endif %}
+                </div>
+                <h3>{{ character.getName() }}</h3>
+                <p>Species: {{ character.getSpecies() }}</p>
+                <p>Gender: {{ character.getGender() }}</p>
+                <p>Origin: {{ character.getOrigin() }}</p>
+                <p>Status: {{ character.getStatus() }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<footer>
+    <p>&copy {{ currentDateTime }}</p>
+</footer>
+</body>
+</html>
+

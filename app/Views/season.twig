@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Season Episodes</title>
+    <style>
+
+        nav {
+            background-color: #192F28;
+            color: #fff;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            text-decoration: none;
+            color: #BC804D;
+            margin-left: 20px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-form {
+            display: flex;
+            align-items: center;
+        }
+
+        #search {
+            padding: 8px;
+            border: 2px solid #BC804D;
+            border-radius: 5px;
+            background-color: transparent;
+            color: #BC804D;
+        }
+
+        button[type="submit"] {
+            padding: 8px 12px;
+            background-color: #005043;
+            color: #BC804D;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .article-container {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .article-item {
+            box-sizing: border-box;
+            background-color: rgba(157, 68, 42, 0.9);
+            width: 50%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            margin: 10px;
+            text-align: center;
+            border-radius: 15px;
+        }
+
+        .article-item a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .article-item a:hover {
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 30px;
+            color: #fff;
+            margin-left: 80px;
+        }
+
+        h2 {
+            font-size: 30px;
+            color: #0C4F4E;
+            margin-left: 80px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        li a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #192F28;
+            color: #fff;
+            padding: 0;
+            text-align: center;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+            background-color: #D7C2B0;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a class="logo" href="/">Home</a>
+    <h1>Rick and Morty Seasons</h1>
+    <div class="search-container">
+        <form class="search-form" action="/search" method="GET">
+            <input type="text" id="search" name="search" placeholder="Search..."/>
+            <button type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                     viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+            </button>
+        </form>
+    </div>
+</nav>
+<h2>Season {{ seasonId }} Episodes</h2>
+<div class="container">
+    <ul class="article-container">
+        {% for episode in episodes %}
+            <li class="article-item">
+                <h3><a href="/episode/{{ episode.id }}">
+                        {{ episode.name }} | {{ episode.episode }}
+                    </a></h3>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<footer>
+    <p>&copy {{ currentDateTime.format('Y-m-d H:i:s') }}</p>
+</footer>
+</body>
+</html>
+
